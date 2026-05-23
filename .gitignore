@@ -1,0 +1,9 @@
+**/__pycache__
+**/apicache-py3/
+**/staticfiles/
+/opt/output/bt.txt
+/opt/output/strat.txt
+/opt/output/macro.txt
+!/bot/trading_bot/etc/.placeholder
+.ipynb_checkpoints/
+#**/trading_bot/etc/

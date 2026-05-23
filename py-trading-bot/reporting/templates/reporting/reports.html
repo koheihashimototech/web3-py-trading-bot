@@ -1,0 +1,75 @@
+<h1>Python Trading bot</h1>
+<p><b>Author: Psemdel, Version: 0.21, <a href="https://github.com/psemdel/py-trading-bot">Github</a></b></p>
+<table>
+    <tr>
+        <td><a href="{% url 'reporting:start_bot' %}">Start bot</a></td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'orders:portfolio' %}">Portfolio</a></td>
+        <td><a href="{% url 'reporting:alerts' %}">Alerts</a></td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'reporting:report' 'Paris' %}">Write report for Paris</a></td>
+        <td><a href="{% url 'reporting:report' 'XETRA' %}">Write report for Xetra</a></td>
+    </tr>
+    <tr>    
+        <td><a href="{% url 'reporting:report' 'Nasdaq' %}">Write report for Nasdaq</a></td>
+        <td><a href="{% url 'reporting:report' 'NYSE' %}">Write report for NYSE</a></td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'reporting:cleaning' %}">Cleaning alerts</a></td>
+        <td><a href="{% url 'admin:index' %}">Admin panel</a></td>
+    </tr>
+</table>
+<br/>
+<h1>Reports</h1>
+<form method="get">
+  <table style="background-color:00CED1;">
+      <th >
+          <td width="20%">
+               Start date {{ reports.form.start_date  }}
+          </td>
+          <td width="20%">
+               End date {{ reports.form.end_date  }}
+          </td>          
+          <td width="20%">
+               Stock exchange {{ reports.form.stock_ex }}
+          </td>     
+          <td width="20%">
+               Index only {{ reports.form.it_is_index }}
+          </td> 
+          <td>
+               <button type="submit">Filter</button>
+          </td>
+      </th>  
+  </table>
+</form>
+
+<table>
+    {% for report in reports.qs %}
+        {% if report.it_is_index %}
+        <tr>
+            {% if report.sector == "undefined" %}
+            <td><a href="{% url 'reporting:rep' report.id %}">Decision index {{ report.date }}</a></td>
+            <td><a href="{% url 'reporting:trend' report.id %}">Trend index {{ report.date }}</a></td>
+            {% else %}
+            <td><a href="{% url 'reporting:rep' report.id %}">Decision index {{ report.date }} {{report.sector}}</a></td>
+            <td><a href="{% url 'reporting:trend' report.id %}">Trend index {{ report.date }} {{report.sector}}</a></td>
+            {% endif %}
+        </tr>
+        {% else %}
+        <tr>
+            {% if report.sector == "undefined" %}
+            <td><a href="{% url 'reporting:rep' report.id %}">Decision {{report.stock_ex}} {{ report.date }}</a></td>
+            <td><a href="{% url 'reporting:trend' report.id %}">Trend {{report.stock_ex}} {{ report.date }}</a></td>
+            {% else %}
+            <td><a href="{% url 'reporting:rep' report.id %}">Decision {{report.stock_ex}} {{ report.date }} {{report.sector}}</a></td>
+            <td><a href="{% url 'reporting:trend' report.id %}">Trend {{report.stock_ex}} {{ report.date }} {{report.sector}}</a></td>
+            {% endif %}
+        </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+
+
